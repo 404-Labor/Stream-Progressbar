@@ -13,7 +13,7 @@ export class ProgressbarComponent implements OnInit {
   public value = 0;
   public finish = 0;
   public unit = 'Wörter';
-  public percent = 100 / this.finish * this.value;
+  public percent = Number((100 / this.finish * this.value).toFixed(2));
   public uuid = (localStorage.getItem('uuid')) ? localStorage.getItem('uuid') : undefined;
 
   constructor(
@@ -51,6 +51,7 @@ export class ProgressbarComponent implements OnInit {
           });
 
           this.percent = 100 / this.finish * this.value;
+          this.percent = Number(this.percent.toFixed(2));
         }
       });
     }, 10000);
