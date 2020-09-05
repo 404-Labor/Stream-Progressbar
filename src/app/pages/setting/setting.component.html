@@ -1,0 +1,51 @@
+<div class="fullHeight" fxLayout="column" fxLayoutAlign="center center">
+
+  <mat-card fxLayout="row" fxLayoutAlign="space-between center">
+    <h3>Deine persönliche URL: <br /><b>http://progressbar.404-labor.de/#/pro/{{uuid}}</b></h3>
+  </mat-card>
+
+  <mat-card fxFlexOffset="1rem">
+    <mat-form-field>
+      <mat-label>Ziel</mat-label>
+      <input name="goal" matInput type="number" [disabled]="goalDisabled" [(ngModel)]="goal">
+    </mat-form-field>
+
+    <mat-form-field fxFlexOffset="1rem">
+      <mat-label>Einheit</mat-label>
+      <input name="unit" matInput placeholder="Wörter" [disabled]="unitDisabled" [(ngModel)]="unit">
+    </mat-form-field>
+  </mat-card>
+
+  <mat-card fxFlexOffset="1rem">
+    <mat-form-field>
+      <mat-label>Wert</mat-label>
+      <input name="value" type="number" matInput [(ngModel)]="valueSet">
+    </mat-form-field>
+
+    <button fxFlexOffset="1rem" mat-mini-fab color="primary" [disabled]="valueSet == 0" (click)="set()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card>
+
+  <mat-card fxFlexOffset="1rem">
+    <button mat-raised-button color="primary" [disabled]="valueSets.length == 0" (click)="newProgress()">Neuer Prozess</button>
+  </mat-card>
+
+  <mat-card fxFlexOffset="1rem" *ngIf="valueSets.length > 0">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <span>Aktuell: {{sum}}</span>
+      <span fxFlexOffset="1rem">Ziel: {{goal}}</span>
+    </div>
+
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let set of valueSets">
+        <div mat-line>{{set.value}}</div>
+        <button fxFlexOffset="1rem" mat-mini-fab color="primary" (click)="delete(set.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+
+</div>
