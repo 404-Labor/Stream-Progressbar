@@ -10,7 +10,7 @@ export class SettingComponent implements OnInit {
 
   public goal = 2000;
   public goalDisabled = false;
-  public unit = 'Wörter';
+  public unit = '';
   public unitDisabled = false;
   public valueSet = 0;
   public valueSets = [];
@@ -49,13 +49,15 @@ export class SettingComponent implements OnInit {
           })
           this.sum = this.sum + Number(val.data[i].value);
         }
+      } else {
+        this.valueSets = [];
       }
     });
   }
 
   set() {
     console.log(this.uuid, this.goal, this.valueSet);
-    this.API.post('&uid=' + this.uuid + '&finish=' + this.goal.toString() + '&value=' + this.valueSet.toString()).subscribe((val) => {
+    this.API.post('&uid=' + this.uuid + '&finish=' + this.goal.toString() + '&unit=' + this.unit + '&value=' + this.valueSet.toString()).subscribe((val) => {
       console.log(val);
       this.valueSet = 0;
       this.goalDisabled = true;
@@ -74,6 +76,7 @@ export class SettingComponent implements OnInit {
     this.API.delete('&id=' + id.toString()).subscribe(() => {
       this.get();
     });
+    this.get();
   }
 
   newProgress() {

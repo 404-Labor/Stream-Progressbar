@@ -37,24 +37,30 @@ export class ProgressbarComponent implements OnInit {
       localStorage.setItem('uuid', this.uuid);
     }
 
-    const inter = setInterval(() => {
-      this.API.get('&uid=' + this.uuid).subscribe((val: Response) => {
-        if (val.data.length > 0) {
-          this.percent = 0;
-          this.value = 0;
+    this.getVal();
 
-          this.finish = val.data[0].finish;
-          this.unit = val.data[0].unit;
-
-          val.data.forEach(element => {
-            this.value = this.value + Number(element.value);
-          });
-
-          this.percent = 100 / this.finish * this.value;
-          this.percent = Number(this.percent.toFixed(2));
-        }
-      });
+    setInterval(() => {
+      this.getVal();
     }, 10000);
+  }
+
+  getVal() {
+    this.API.get('&uid=' + this.uuid).subscribe((val: Response) => {
+      if (val.data.length > 0) {
+        this.percent = 0;
+        this.value = 0;
+
+        this.finish = val.data[0].finish;
+        this.unit = val.data[0].unit;
+
+        val.data.forEach(element => {
+          this.value = this.value + Number(element.value);
+        });
+
+        this.percent = 100 / this.finish * this.value;
+        this.percent = Number(this.percent.toFixed(2));
+      }
+    });
   }
 
 }

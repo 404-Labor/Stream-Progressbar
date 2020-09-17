@@ -15,7 +15,7 @@ if ($connect->connect_error) {
 
 function utf8_encode_deep(&$input) {
 	if (is_string($input)) {
-		$input = utf8_encode($input);
+		$input = htmlspecialchars($input);
 	} else if (is_array($input)) {
 		foreach ($input as &$value) {
 			utf8_encode_deep($value);
@@ -115,7 +115,7 @@ function Insert($sql,$output = true) {
 function confirmData(&$input) {
   global $connect;
 	if (is_string($input)) {
-		$input = utf8_decode($connect->real_escape_string($input));
+		$input = htmlspecialchars($connect->real_escape_string($input));
 	} else if (is_array($input)) {
 		foreach ($input as &$value) {
 			confirmData($value);
@@ -143,7 +143,7 @@ if (isset($_GET)) {
         break;
 
     case "post":
-        $sql = "INSERT INTO `progressbar`(`uid`, `value`, `finish`) VALUES ('".$data['uid']."',".$data['value'].",".$data['finish'].")";
+        $sql = "INSERT INTO `progressbar`(`uid`, `value`, `unit`, `finish`) VALUES ('".$data['uid']."',".$data['value'].",'".$data['unit']."',".$data['finish'].")";
         Insert($sql);
         break;
 
